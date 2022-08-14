@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/bg_button_blue.xml" value="0.1285" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/bg_button_dark.xml" value="0.151" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/bg_button_dark_blue.xml" value="0.151" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/bg_button_light.xml" value="0.151" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/bg_button_light_blue.xml" value="0.151" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/ic_mail.xml" value="0.151" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/ic_password_lock.xml" value="0.1045" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/login.xml" value="0.1045" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/register.xml" value="0.1045" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/drawable/welcome.xml" value="0.1045" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/layout/activity_main.xml" value="0.14560810810810812" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/layout/fragment_home.xml" value="0.14560810810810812" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/layout/fragment_login.xml" value="0.18" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/layout/fragment_register.xml" value="0.15" />
+        <entry key="..\:/Users/giorg/AndroidStudioProjects/AuthRetrofit/app/src/main/res/layout/fragment_welcome.xml" value="0.13524590163934427" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
