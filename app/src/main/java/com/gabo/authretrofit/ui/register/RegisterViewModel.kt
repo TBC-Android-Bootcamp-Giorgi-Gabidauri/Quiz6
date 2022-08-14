@@ -22,18 +22,4 @@ class RegisterViewModel(
             saveLoginStatusUseCase(true)
         }
     }
-//    fun requestRegister(requestModel: RequestModel) = flow {
-//        val response = registerUseCase(requestModel)
-//        val result = when {
-//            response.isSuccessful -> {
-//                val body = response.body()
-//                ResponseHandler.Success(body)
-//            }
-//            else -> {
-//                val errorMsg = response.errorBody()?.string()
-//                ResponseHandler.Error(errorMsg)
-//            }
-//        }
-//        emit(result)
-//    }
 }

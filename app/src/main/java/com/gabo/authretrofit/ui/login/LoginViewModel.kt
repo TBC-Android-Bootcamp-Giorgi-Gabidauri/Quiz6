@@ -13,20 +13,6 @@ class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val saveLoginStatusUseCase: SaveLoginStatusUseCase,
 ) : ViewModel() {
-    //    fun requestLogin(requestModel: RequestModel) = flow {
-//        val response = loginUseCase(requestModel)
-//        val result = when {
-//            response.isSuccessful -> {
-//                val body = response.body()
-//                ResponseHandler.Success(body)
-//            }
-//            else -> {
-//                val errorMsg = response.errorBody()?.string()
-//                ResponseHandler.Error(errorMsg)
-//            }
-//        }
-//        emit(result)
-//    }
     fun requestLogin(requestModel: RequestModel) = flow {
         handleResponse(loginUseCase(requestModel)).collect { emit(it) }
     }
