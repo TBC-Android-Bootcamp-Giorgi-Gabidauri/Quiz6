@@ -10,5 +10,5 @@ interface Repository {
     suspend fun loginUser(requestModel: RequestModel): Response<LoginModel>
     suspend fun saveLogInStatus(isLoggedIn: Boolean)
     suspend fun getLogInStatus(): Boolean
-    suspend fun deleteLoginStatus(isLoggedIn: Boolean)
+    suspend fun deleteLoginStatus()
 }

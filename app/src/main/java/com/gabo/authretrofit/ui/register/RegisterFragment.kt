@@ -31,7 +31,7 @@ class RegisterFragment :
 
     private fun setupClickListeners() {
         binding.btnRegister.setOnClickListener {
-            setupObservers()
+            register()
 
             val resultEmail = binding.tietEmail.text.toString()
             val resultPassword = binding.tietPassword.text.toString()
@@ -48,9 +48,9 @@ class RegisterFragment :
 
     private fun setupCheckers() {
         val checkers = Checkers(requireContext(), binding)
-        var validEmail: Boolean = false
-        var validPassword: Boolean = false
-        var validRepeatedPassword: Boolean = false
+        var validEmail = false
+        var validPassword = false
+        var validRepeatedPassword = false
         with(binding) {
             tietUsername.doOnTextChanged { text, start, before, count ->
                 validEmail = checkers.emailCheck(tietUsername, tilUsername)
@@ -67,30 +67,30 @@ class RegisterFragment :
         }
     }
 
-    private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.requestRegister(
-                    RequestModel(
-                        binding.tietEmail.text.toString(),
-                        binding.tietPassword.text.toString()
-                    )
-                ).collect {
-                    when (it) {
-                        is ResponseHandler.Success -> {
-                            register()
-                        }
-                        is ResponseHandler.Error -> {
-                            Toast.makeText(
-                                requireContext(),
-                                it.errorMSg,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-            }
-
-        }
-    }
+//    private fun setupObservers() {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.requestRegister(
+//                    RequestModel(
+//                        binding.tietEmail.text.toString(),
+//                        binding.tietPassword.text.toString()
+//                    )
+//                ).collect {
+//                    when (it) {
+//                        is ResponseHandler.Success -> {
+//                            register()
+//                        }
+//                        is ResponseHandler.Error -> {
+//                            Toast.makeText(
+//                                requireContext(),
+//                                it.errorMSg,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
+//    }
 }

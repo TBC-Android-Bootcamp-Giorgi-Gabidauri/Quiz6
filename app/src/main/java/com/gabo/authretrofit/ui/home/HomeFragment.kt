@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.gabo.authretrofit.R
 import com.gabo.authretrofit.base.BaseFragment
 import com.gabo.authretrofit.databinding.FragmentHomeBinding
 
@@ -19,13 +21,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
     override fun setupView(savedInstanceState: Bundle?) {
         setupClickListeners()
         args.email.let {
-            binding.tvHome.text = "token: $it"
+            binding.tvHome.text = "email: $it"
         }
     }
 
     private fun setupClickListeners(){
         binding.btnLogOut.setOnClickListener {
             viewModel.deleteLoginStatus()
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
         }
     }
 }

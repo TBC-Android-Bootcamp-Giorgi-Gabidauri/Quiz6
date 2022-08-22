@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val deleteLoginStatusUseCase: DeleteLoginStatusUseCase) : ViewModel() {
     fun deleteLoginStatus(){
         viewModelScope.launch {
-            deleteLoginStatusUseCase(false)
+            deleteLoginStatusUseCase(Unit)
         }
     }
 }

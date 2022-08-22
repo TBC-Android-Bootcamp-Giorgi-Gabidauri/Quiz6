@@ -1,5 +1,6 @@
 package com.gabo.authretrofit.diModules
 
+import com.gabo.authretrofit.ui.home.HomeViewModel
 import com.gabo.authretrofit.ui.login.LoginViewModel
 import com.gabo.authretrofit.ui.register.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -10,6 +11,9 @@ val viewModelsModule = module {
         LoginViewModel(get(), get(), get())
     }
     viewModel {
-        RegisterViewModel(get(), get())
+        RegisterViewModel()
+    }
+    viewModel{
+        HomeViewModel(get())
     }
 }

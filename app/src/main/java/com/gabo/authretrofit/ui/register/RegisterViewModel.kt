@@ -10,16 +10,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
-    private val registerUseCase: RegisterUseCase,
-    private val saveLoginStatusUseCase: SaveLoginStatusUseCase,
 ) : ViewModel() {
-    fun requestRegister(requestModel: RequestModel) = flow {
-        handleResponse(registerUseCase(requestModel)).collect { emit(it) }
-    }
 
-    fun saveLoginStatus() {
-        viewModelScope.launch {
-            saveLoginStatusUseCase(true)
-        }
-    }
 }
