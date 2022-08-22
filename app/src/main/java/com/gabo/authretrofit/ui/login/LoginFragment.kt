@@ -4,24 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.gabo.authretrofit.R
 import com.gabo.authretrofit.base.BaseFragment
-import com.gabo.authretrofit.data.models.LoginModel
 import com.gabo.authretrofit.data.models.RequestModel
-import com.gabo.authretrofit.databinding.ActivityMainBinding
 import com.gabo.authretrofit.databinding.FragmentLoginBinding
 import com.gabo.authretrofit.helpers.Checkers
 import com.gabo.authretrofit.helpers.ResponseHandler
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginViewModel::class) {
@@ -37,8 +30,8 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener("requestKey") { requestKey, bundle ->
-            val resultEmail = bundle.getBundle("EmailKey")
-            val resultPassword = bundle.getBundle("PasswordKey")
+            val resultEmail = bundle.getString("EmailKey")
+            val resultPassword = bundle.getString("PasswordKey")
             email = resultEmail.toString()
             binding.tietUsername.setText(resultEmail.toString())
             binding.tietPassword.setText(resultPassword.toString())
@@ -58,8 +51,8 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginVi
 
     private fun setupCheckers() {
         val checkers = Checkers(requireContext(), binding)
-        var validEmail: Boolean = false
-        var validPassword: Boolean = false
+        var validEmail = false
+        var validPassword = false
         with(binding) {
             tietUsername.doOnTextChanged { text, start, before, count ->
                 validEmail = checkers.emailCheck(tietUsername, tilUsername)
@@ -84,7 +77,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginVi
                 ).collect {
                     when (it) {
                         is ResponseHandler.Success -> {
-                            login(it.data!!)
+                            login()
                             if (binding.swRememberMe.isChecked) {
                                 viewModel.saveLoginStatus()
                             }
@@ -102,7 +95,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginVi
         }
     }
 
-    private fun login(model: LoginModel) {
+    private fun login() {
         findNavController().navigate(
             LoginFragmentDirections.actionLoginFragmentToHomeFragment(
                 email
