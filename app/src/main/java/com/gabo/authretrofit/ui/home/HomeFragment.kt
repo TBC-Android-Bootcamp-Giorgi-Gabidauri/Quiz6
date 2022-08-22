@@ -23,6 +23,4 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
             binding.tvHome.text = "token: ${it.token}\n\nid:${it.id}"
         }
     }
-
-
 }
