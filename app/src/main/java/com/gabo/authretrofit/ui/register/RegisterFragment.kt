@@ -52,13 +52,12 @@ class RegisterFragment :
         var validPassword = false
         var validRepeatedPassword = false
         with(binding) {
-            tietUsername.doOnTextChanged { text, start, before, count ->
-                validEmail = checkers.emailCheck(tietUsername, tilUsername)
-
+            tietEmail.doOnTextChanged { text, start, before, count ->
+                validEmail = checkers.emailCheck(tietEmail, tilEmail)
             }
             tietPassword.doOnTextChanged { text, start, before, count ->
                 checkers.emptyError(tietPassword, tilPassword)
-                validPassword = checkers.emailCheck(tietUsername, tilUsername)
+                validPassword = checkers.emptyError(tietPassword, tilPassword)
             }
             tietRepeatPassword.doOnTextChanged { text, start, before, count ->
                 validRepeatedPassword = tietPassword.text == tietRepeatPassword
@@ -66,31 +65,4 @@ class RegisterFragment :
             btnRegister.isClickable = validEmail && validPassword && validRepeatedPassword
         }
     }
-
-//    private fun setupObservers() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.requestRegister(
-//                    RequestModel(
-//                        binding.tietEmail.text.toString(),
-//                        binding.tietPassword.text.toString()
-//                    )
-//                ).collect {
-//                    when (it) {
-//                        is ResponseHandler.Success -> {
-//                            register()
-//                        }
-//                        is ResponseHandler.Error -> {
-//                            Toast.makeText(
-//                                requireContext(),
-//                                it.errorMSg,
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//    }
 }
