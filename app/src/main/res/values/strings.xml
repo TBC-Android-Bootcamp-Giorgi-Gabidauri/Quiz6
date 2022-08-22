@@ -7,4 +7,9 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="welcome_home">Welcome Home</string>
+    <string name="remember_me">Remember me</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="log_out">Log Out</string>
+    <string name="errorEmpty">Required* Please Fill This Field</string>
+    <string name="errorEmail"><![CDATA[>Required* Does Not matches Email Pattern!]]></string>
 </resources>

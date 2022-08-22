@@ -4,73 +4,97 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.gabo.authretrofit.R
 import com.gabo.authretrofit.base.BaseFragment
 import com.gabo.authretrofit.data.models.LoginModel
 import com.gabo.authretrofit.data.models.RequestModel
+import com.gabo.authretrofit.databinding.ActivityMainBinding
 import com.gabo.authretrofit.databinding.FragmentLoginBinding
+import com.gabo.authretrofit.helpers.Checkers
 import com.gabo.authretrofit.helpers.ResponseHandler
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginViewModel::class) {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
-
+    private var email: String = ""
     override fun setupView(savedInstanceState: Bundle?) {
+        checkLogInStatus()
+        setupCheckers()
         setupClickListeners()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener("requestKey") { requestKey, bundle ->
+            val resultEmail = bundle.getBundle("EmailKey")
+            val resultPassword = bundle.getBundle("PasswordKey")
+            email = resultEmail.toString()
+            binding.tietUsername.setText(resultEmail.toString())
+            binding.tietPassword.setText(resultPassword.toString())
+        }
+    }
+
     private fun setupClickListeners() {
-        binding.btnLogin.setOnClickListener {
-            setupObservers()
+        with(binding) {
+            btnLogin.setOnClickListener {
+                setupObservers()
+            }
+            btnRegister.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+            }
+        }
+    }
+
+    private fun setupCheckers() {
+        val checkers = Checkers(requireContext(), binding)
+        var validEmail: Boolean = false
+        var validPassword: Boolean = false
+        with(binding) {
+            tietUsername.doOnTextChanged { text, start, before, count ->
+                validEmail = checkers.emailCheck(tietUsername, tilUsername)
+
+            }
+            tietPassword.doOnTextChanged { text, start, before, count ->
+                checkers.emptyError(tietPassword, tilPassword)
+                validPassword = checkers.emailCheck(tietUsername, tilUsername)
+            }
+            btnLogin.isClickable = validEmail && validPassword
         }
     }
 
     private fun setupObservers() {
-        with(binding) {
-            when {
-                tietUsername.text.toString().isEmpty() -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Email field must not be empty",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                tietPassword.text.toString().isEmpty() -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Password field must not be empty",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                else -> {
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            viewModel.requestLogin(
-                                RequestModel(
-                                    binding.tietUsername.text.toString(),
-                                    binding.tietPassword.text.toString()
-                                )
-                            ).collect {
-                                when (it) {
-                                    is ResponseHandler.Success -> {
-                                        login(it.data!!)
-                                        viewModel.saveLoginStatus()
-                                    }
-                                    is ResponseHandler.Error -> {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            it.errorMSg,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.requestLogin(
+                    RequestModel(
+                        binding.tietUsername.text.toString(),
+                        binding.tietPassword.text.toString()
+                    )
+                ).collect {
+                    when (it) {
+                        is ResponseHandler.Success -> {
+                            login(it.data!!)
+                            if (binding.swRememberMe.isChecked) {
+                                viewModel.saveLoginStatus()
                             }
+                        }
+                        is ResponseHandler.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                it.errorMSg,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -81,11 +105,25 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(LoginVi
     private fun login(model: LoginModel) {
         findNavController().navigate(
             LoginFragmentDirections.actionLoginFragmentToHomeFragment(
-                loginModel = model,
-                registerModel = null
+                email
             )
         )
     }
 
+    private fun checkLogInStatus() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.loginStatus.collect {
+                    if (it) {
+                        findNavController().navigate(
+                            LoginFragmentDirections.actionLoginFragmentToHomeFragment(
+                                email
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
 
 }

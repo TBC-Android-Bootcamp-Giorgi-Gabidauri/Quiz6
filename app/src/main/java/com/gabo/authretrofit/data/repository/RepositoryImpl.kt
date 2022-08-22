@@ -30,4 +30,8 @@ class RepositoryImpl(
         return preferences.getBoolean(LOGIN_STATUS_KEY, false)
     }
 
+    override suspend fun deleteLoginStatus(isLoggedIn: Boolean) {
+        preferences.edit().putBoolean(LOGIN_STATUS_KEY, isLoggedIn).apply()
+    }
+
 }

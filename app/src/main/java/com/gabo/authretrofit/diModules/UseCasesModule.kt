@@ -1,9 +1,6 @@
 package com.gabo.authretrofit.diModules
 
-import com.gabo.authretrofit.domain.useCases.GetLoginStatusUseCase
-import com.gabo.authretrofit.domain.useCases.LoginUseCase
-import com.gabo.authretrofit.domain.useCases.RegisterUseCase
-import com.gabo.authretrofit.domain.useCases.SaveLoginStatusUseCase
+import com.gabo.authretrofit.domain.useCases.*
 import org.koin.dsl.module
 
 val useCasesModule = module {
@@ -18,5 +15,8 @@ val useCasesModule = module {
     }
     factory {
         SaveLoginStatusUseCase(get())
+    }
+    factory {
+        DeleteLoginStatusUseCase(get())
     }
 }

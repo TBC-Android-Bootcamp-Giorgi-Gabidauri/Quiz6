@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import com.gabo.authretrofit.base.BaseFragment
 import com.gabo.authretrofit.databinding.FragmentHomeBinding
@@ -16,11 +17,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(HomeViewMo
 
     @SuppressLint("SetTextI18n")
     override fun setupView(savedInstanceState: Bundle?) {
-        args.loginModel?.let {
-            binding.tvHome.text = "token: ${it.token}"
+        setupClickListeners()
+        args.email.let {
+            binding.tvHome.text = "token: $it"
         }
-        args.registerModel?.let {
-            binding.tvHome.text = "token: ${it.token}\n\nid:${it.id}"
+    }
+
+    private fun setupClickListeners(){
+        binding.btnLogOut.setOnClickListener {
+            viewModel.deleteLoginStatus()
         }
     }
 }
